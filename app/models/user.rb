@@ -8,6 +8,15 @@ class User < ApplicationRecord
   has_many :favorites, dependent: :destroy
   has_many :book_comments, dependent: :destroy
 
+  has_many :follower, foreign_key: "follower_id", class_name: "Relationship", dependent: :destroy
+  has_many :following_user, through: :follower, source: :followed
+
+  has_many :followed,foreign_key: "followed_id", class_name: "Relationship", dependent: :destroy
+  has_many :follower_user, through: :followed, source: :follower
+
+  post 'follow/:id' => 'relationships#follow', as: 'follow'
+  post 'unfollow/:id' => 'relationships#unfollow', as: 'unfollow'
+
   attachment :profile_image, destroy: false
 
   validates :name, length: {maximum: 20, minimum: 2}, uniqueness: true

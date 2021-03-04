@@ -26,6 +26,18 @@ class UsersController < ApplicationController
     end
   end
 
+  def follow(user_id)
+    follower.create(followed_id: user_id)
+  end
+
+  def unfollow(user_id)
+    follower.findby(followed_id: user_id).destroy
+  end
+
+  def following?(user)
+    following_user.include?(user)
+  end
+
   private
   def user_params
     params.require(:user).permit(:name, :introduction, :profile_image)
