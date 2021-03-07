@@ -9,7 +9,7 @@ def create
  	else
  	 flash.now[:alert] = "You have something error!"
  	 redirect_to book_path(book)
- 	 end
+ 	end
 end
 
 def destroy
